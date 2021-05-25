@@ -1,0 +1,63 @@
+.buttons-container {
+    border: 0.1px solid green;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 5px;
+    width: 86.9%;
+    margin: 0 50px;
+}
+
+.button {
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background-color: gold;
+    font-weight: 900;
+}
+
+.button:hover {
+    height: 50px;
+    border: 1px solid gold;
+    border-radius: 10px;
+    background-color: green;
+    color: white;
+}
+
+.main {
+    height: 500px;
+    width: 88%;
+    margin: 0 50px;
+    border: 1px solid green;
+    padding: 20px;
+    overflow: auto;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: auto;
+}
+
+caption {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+}
+
+
+
+.delete {
+    border: none;
+    background-color: white;
+    margin: 10px;
+    padding: 5px;
+}
+
+.delete:hover {
+    border: none;
+    background-color: rgb(9, 255, 0);
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+}
