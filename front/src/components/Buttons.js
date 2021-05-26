@@ -9,22 +9,25 @@ export default class Buttons extends PureComponent {
     onSubmitDataPost: [],
   };
 
-
-  onSubmit = (arg) => {
-    
-    this.postDataFromForm(arg)
-  }
+  onSubmitF = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = [...formData.values()];
+    this.postDataFromForm(data);
+  };
 
   postDataFromForm = (data) => {
-    fetch(`http://localhost:7777/${data.id}`, {
+    console.log(data);
+    const bodyJSON = JSON.stringify({ data: data });
+    console.log(bodyJSON);
+    fetch(`http://localhost:7777/${+data[0]}`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        "content-type": "application/JSON; charset=UTF-8",
       },
-      body: JSON.stringify(data)
-    })
-
-  }
+      body: bodyJSON,
+    });
+  };
 
   onClickAll = () => {
     this.getDataFromPapaOnClickAllFishings();
@@ -138,7 +141,6 @@ export default class Buttons extends PureComponent {
   };
 
   render() {
-    console.log(this.state.dataFromPapaBack);
     return (
       <div className="buttons-container_main-container">
         <div className="buttons-container">
@@ -171,11 +173,13 @@ export default class Buttons extends PureComponent {
           </button>
           <div className="howmoney">
             <h3>Сколько $ всего: {this.state.money.toFixed(2)}</h3>
-            <form onSubmit={() => this.onSubmit(this.state.onSubmitDataPost)}>
+            <form
+              onSubmit={(e) => this.onSubmitF(e)}
+            >
               <p>Добавить услугу</p>
-              <input placeholder="id" name="id"></input>
-              <input placeholder="тип рыбалки" name="mode"></input>
-              <input placeholder="цена в $" name="price"></input>
+              <input placeholder="id" name="body_id"></input>
+              <input placeholder="тип рыбалки" name="body_mode"></input>
+              <input placeholder="цена в $" name="body_ price"></input>
               <button type="submit">Добавить</button>
             </form>
           </div>

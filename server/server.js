@@ -1,19 +1,25 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const { off } = require('process');
 const Papa = require('papaparse');
-const e = require('express');
+var bodyParser = require('body-parser');
+
+
+
+
 
 const file = fs.createReadStream('./Fishing.csv')
-
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: false }))
+.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 
 app.all('*', function (req, res, next) {
-    res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
     next()
 })
 
@@ -97,7 +103,6 @@ app.delete('/:id', function(req, res) {
     const id = +req.params.id;
     dataFromPapa = dataFromPapa.filter((el) => {
         if(el[''] !== id) {
-            console.log('удаление работает')
             return el;
         }
         
@@ -106,9 +111,21 @@ app.delete('/:id', function(req, res) {
 })
 
 app.post('/:id', function(req, res) {
-    console.log(req)
-    dataFromPapa.push(req.body)
-    res.status(200).json(dataFromPapa)
+    console.log(req.params.id)
+    console.log(req.body.data);
+    const objToPapa = {
+        '': +req.body.data[0],
+        mode: req.body.data[1],
+        price: +req.body.data[2],
+    }
+    // res.send(200)
+    dataFromPapa.push(objToPapa)
+    // if(req.body) {
+        
+    //     return;
+    // }
+    // res.status(400).json("ОШИБКА");
+    
 })
 
 app.listen(7777, () => {
